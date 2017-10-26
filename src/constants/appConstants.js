@@ -59,7 +59,7 @@ export const getSignedContractInstance = (privateKey, address, providerUrl) =>
     if (providerUrl === 'test') return res(mock.deployed());
     const DetherContract = contract(DetherJson);
     const provider = new SignerProvider(providerUrl, {
-      signTransaction: (rawTx, cb) => cb(null, sign(rawTx, ethToolbox.add0x(privateKey))),
+      signTransaction: (rawTx, cb) => cb(null, sign(rawTx, ethToolbox.utils.add0x(privateKey))),
       accounts: cb => cb(null, address),
     });
     DetherContract.setProvider(provider);

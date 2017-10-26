@@ -72,25 +72,26 @@ const dtrRegisterPoint = async (teller) =>
 
     try {
       const key = await ethToolbox.decodeKeystore(teller.keystore, teller.password);
+      console.log('key', key);
       if (!key || !key.privateKey || !key.address || !ethToolbox.utils.isAddr(key.address)) {
         return rej(new TypeError('Invalid keystore or password'));
       }
-
       const dtrContractInstance =
         await getSignedContractInstance(key.privateKey, key.address, teller.providerUrl);
 
       const utilityWeb3 = new Web3(new Web3.providers.HttpProvider(teller.providerUrl));
 
       let tsxAmount = parseInt(utilityWeb3.toWei(teller.amount, 'ether'), 10);
-
       if (teller.providerUrl !== 'test') {
         const balance = await utilityWeb3.eth.getBalance(key.address);
+        console.log('balance', balance);
          // check if enough gas is present to sendCoin once after registering
          if (balance.toNumber() < (tsxAmount + (GAS_PRICE * 650000))) {
            tsxAmount = balance.toNumber() - (GAS_PRICE * 650000);
            if (tsxAmount < 0.0025) return rej(new TypeError('Insufficient funds'));
          }
       }
+
       const result = await dtrContractInstance.registerPoint(
         teller.lat.toFixed(6) * (10 ** 5),
         teller.lng.toFixed(6) * (10 ** 5),
@@ -107,6 +108,7 @@ const dtrRegisterPoint = async (teller) =>
           gasPrice: GAS_PRICE,
         },
       );
+      console.log('result', result);
       return res({
           from: ethToolbox.utils.add0x(key.address),
           to: dtrContractInstance.address,
@@ -123,6 +125,7 @@ const dtrRegisterPoint = async (teller) =>
           },
       });
     } catch (e) {
+      console.log('error', e);
       return rej(new TypeError(e));
     }
   });
