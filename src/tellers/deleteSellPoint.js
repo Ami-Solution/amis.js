@@ -1,4 +1,5 @@
 import ethToolbox from 'eth-toolbox';
+import ethers from 'ethers';
 
 import { getSignedContractInstance } from '../constants/appConstants';
 
@@ -14,11 +15,19 @@ import { getSignedContractInstance } from '../constants/appConstants';
  */
 const withdrawAll = (keystore, password, providerUrl) =>
   new Promise(async (res, rej) => {
-    if (!keystore) return rej(new TypeError('Invalid keystore'));
-    if (!password) return rej(new TypeError('Invalid password'));
-    if (!providerUrl) return rej(new TypeError('Invalid provider Url'));
+    // if (!keystore) return rej(new TypeError('Invalid keystore'));
+    // if (!password) return rej(new TypeError('Invalid password'));
+    // if (!providerUrl) return rej(new TypeError('Invalid provider Url'));
 
     try {
+      const provider = ethers.providers;
+      const Wallet = ethers.Wallet;
+      const infuraProvider = new provider.InfuraProvider({name: 'kovan', chainId: 42}, 'v604Wu8pXGoPC41ARh0B');
+      console.log(infuraProvider);
+      console.log('keystore', keystore)
+      const decrypted = await Wallet.fromEncryptedWallet(keystore ,password);
+      console.log('decrypted wallet',decrypted);
+
       const key = await ethToolbox.decodeKeystore(keystore, password);
 
       if (!key || !key.privateKey || !key.address || !ethToolbox.utils.isAddr(key.address)) {

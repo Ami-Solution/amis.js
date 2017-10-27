@@ -4,6 +4,7 @@ import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import ethToolbox from 'eth-toolbox';
 import lightwallet from 'eth-light';
+import ethers from 'ethers';
 
 import withdrawAll from '../src/tellers/deleteSellPoint';
 import dtrRegisterPoint from '../src/tellers/addTellers';
@@ -15,7 +16,7 @@ const { expect } = chai;
 let keystore = null;
 const password = 'Abcd';
 const seedPhrase = 'forward romance subway tool scatter hazard predict trip scout faculty quiz safe';
-
+let encrypted;
 /**
  * Create Vault
  * @param  {object} data Password, seed, hdPathString
@@ -33,14 +34,20 @@ export const createVault = data =>
 
 before(async () => {
   try {
-  keystore = await createVault({ password, seedPhrase, hdPathString: "m/44'/60'/0'/0" });
-    // use the same seed and delete sell point before
-  keystore.keyFromPassword(password, (error, pwDerivedKey) => {
-      keystore.generateNewAddress(pwDerivedKey, 1);
-        const [address] = keystore.getAddresses();
-        console.log(address);
-      // serializedKeystore = keystore.serialize();
-    });
+
+    const Wallet = ethers.Wallet;
+    const wallet = Wallet.fromMnemonic(seedPhrase);
+
+    encrypted = await wallet.encrypt(password);
+
+  // keystore = await createVault({ password, seedPhrase, hdPathString: "m/44'/60'/0'/0" });
+  //   // use the same seed and delete sell point before
+  // keystore.keyFromPassword(password, (error, pwDerivedKey) => {
+  //     keystore.generateNewAddress(pwDerivedKey, 1);
+  //       const [address] = keystore.getAddresses();
+  //       console.log(address);
+  //     // serializedKeystore = keystore.serialize();
+  //   });
   } catch (e) {
     console.log('e', e);
   }
@@ -53,26 +60,26 @@ describe('dtrRegisterPoint KOVAN', () => {
   it('should work', async () => {
     try {
       try {
-        const tsx1 = await withdrawAll(keystore, password, 'https://kovan.infura.io/v604Wu8pXGoPC41ARh0B');
+       const tsx1 = await withdrawAll(encrypted, password, 'https://kovan.infura.io/v604Wu8pXGoPC41ARh0B');
       }
       catch (ex) {
         console.log('e', ex);
       } finally {
-        const tsx = await dtrRegisterPoint({
-          lat: 48.84793,
-          lng: 2.31617,
-          zone: 123,
-          rates: 100,
-          avatar: 2,
-          currency: 1,
-          telegram: 'dether',
-          amount: 0.1,
-          username: 'dether.js',
-          keystore,
-          password,
-          providerUrl: 'https://kovan.infura.io/v604Wu8pXGoPC41ARh0B',
-        });
-        expect(typeof tsx).to.equal('object');
+        // const tsx = await dtrRegisterPoint({
+        //   lat: 48.84793,
+        //   lng: 2.31617,
+        //   zone: 123,
+        //   rates: 100,
+        //   avatar: 2,
+        //   currency: 1,
+        //   telegram: 'dether',
+        //   amount: 0.1,
+        //   username: 'dether.js',
+        //   keystore,
+        //   password,
+        //   providerUrl: 'https://kovan.infura.io/v604Wu8pXGoPC41ARh0B',
+        // });
+        // expect(typeof tsx).to.equal('object');
       }
 
     } catch (e) {
