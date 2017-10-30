@@ -1,48 +1,31 @@
-import ethToolbox from 'eth-toolbox';
+// import ethToolbox from 'eth-toolbox';
 import ethers from 'ethers';
+import DetherJson from 'dethercontract/contracts/DetherInterface.json';
 
-import { getSignedContractInstance } from '../constants/appConstants';
-
-// gas used = 26497
-// gas price average (mainnet) = 25000000000 wei
-// 50000 * 25000000000 = 0.001250000000000000 ETH
-// need 0.001250000000000000 ETH to process this function
 /**
- * Delete sell point, this function withdraw automatically balance escrow to owner
- * @param  {object}  keystore deserialize keystore
- * @param  {string}  password
- * @return {Promise}
+ * The encrypted wallet and the provider can be move on the class creation
  */
-const withdrawAll = (keystore, password, providerUrl) =>
+const withdrawAll = (encrypted, password, providerUrl) =>
   new Promise(async (res, rej) => {
-    // if (!keystore) return rej(new TypeError('Invalid keystore'));
-    // if (!password) return rej(new TypeError('Invalid password'));
-    // if (!providerUrl) return rej(new TypeError('Invalid provider Url'));
 
     try {
       const provider = ethers.providers;
       const Wallet = ethers.Wallet;
-      const infuraProvider = new provider.InfuraProvider({name: 'kovan', chainId: 42}, 'v604Wu8pXGoPC41ARh0B');
-      console.log(infuraProvider);
-      console.log('keystore', keystore)
-      const decrypted = await Wallet.fromEncryptedWallet(keystore ,password);
-      console.log('decrypted wallet',decrypted);
+      let decrypted = await Wallet.fromEncryptedWallet(encrypted ,password);
+      // We need build the provider inside the function cause the decrypt wallet doesn't keep the original provider
+      // Impossible to create in infura provider on kovan, its already fixed on github it will be publish on the next npm upgrade
 
-      const key = await ethToolbox.decodeKeystore(keystore, password);
+      decrypted.provider = new provider.InfuraProvider(true);
+      // decrypted.provider.chainId = 42;
+      // decrypted.provider.name = 'kovan';
 
-      if (!key || !key.privateKey || !key.address || !ethToolbox.utils.isAddr(key.address)) {
-        return rej(new TypeError('Invalid keystore or password'));
-      }
+      console.log('provider', decrypted.provider );
+      // const contract = new ethers.Contract(DetherJson.networks[decrypted.provider.chainId].address, DetherJson.abi, decrypted);
+      const contract = new ethers.Contract(DetherJson.networks[42].address, DetherJson.abi, decrypted);
 
-      const dtrContractInstance =
-        await getSignedContractInstance(key.privateKey, key.address, providerUrl);
-
-      return res(dtrContractInstance
-        .withdrawAll({
-            from: key.address,
-            gas: 100000,
-            gasPrice: 25000000000,
-          }));
+      // the transaction will not work cause we are on ropsten
+      return res(contract
+        .withdrawAll());
     } catch (e) {
       return rej(new TypeError(e));
     }

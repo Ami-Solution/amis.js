@@ -1,6 +1,9 @@
 import ethToolbox from 'eth-toolbox';
 import Web3 from 'web3';
 
+import ethers from 'ethers';
+import DetherJson from 'dethercontract/contracts/DetherInterface.json';
+
 import { GAS_PRICE, getSignedContractInstance } from '../constants/appConstants';
 
 const check = (teller) => {
@@ -31,9 +34,9 @@ const check = (teller) => {
   if (!teller.username || teller.username.length < 3 || teller.username.length > 30) {
     return { error: true, msg: 'Invalid username' };
   }
-  if (!teller.keystore) {
-    return { error: true, msg: 'Invalid keystore' };
-  }
+  // if (!teller.keystore) {
+  //   return { error: true, msg: 'Invalid keystore' };
+  // }
   if (!teller.password || teller.password.length < 1) {
     return { error: true, msg: 'Invalid password' };
   }
@@ -67,23 +70,22 @@ const check = (teller) => {
  */
 const dtrRegisterPoint = async (teller) =>
   new Promise(async (res, rej) => {
-    const secu = check(teller);
-    if (secu.error) return rej(new TypeError(secu.msg));
+    // const secu = check(teller);
+    // if (secu.error) return rej(new TypeError(secu.msg));
 
     try {
-      const key = await ethToolbox.decodeKeystore(teller.keystore, teller.password);
-      console.log('key', key);
-      if (!key || !key.privateKey || !key.address || !ethToolbox.utils.isAddr(key.address)) {
-        return rej(new TypeError('Invalid keystore or password'));
-      }
-      const dtrContractInstance =
-        await getSignedContractInstance(key.privateKey, key.address, teller.providerUrl);
+      const provider = ethers.providers;
+      const Wallet = ethers.Wallet;
+      const infuraProvider = new provider.InfuraProvider({name: 'kovan', chainId: 42}, 'v604Wu8pXGoPC41ARh0B');
+      let decrypted = await Wallet.fromEncryptedWallet(teller.encrypted ,teller.password);
+      decrypted.provider = new provider.InfuraProvider({name: 'kovan', chainId: 42}, 'v604Wu8pXGoPC41ARh0B');
+      let contract = new ethers.Contract(DetherJson.networks[infuraProvider.chainId].address, DetherJson.abi, decrypted);
 
       const utilityWeb3 = new Web3(new Web3.providers.HttpProvider(teller.providerUrl));
 
       let tsxAmount = parseInt(utilityWeb3.toWei(teller.amount, 'ether'), 10);
       if (teller.providerUrl !== 'test') {
-        const balance = await utilityWeb3.eth.getBalance(key.address);
+        const balance = await utilityWeb3.eth.getBalance(decrypted.address);
         console.log('balance', balance);
          // check if enough gas is present to sendCoin once after registering
          if (balance.toNumber() < (tsxAmount + (GAS_PRICE * 650000))) {
@@ -91,8 +93,8 @@ const dtrRegisterPoint = async (teller) =>
            if (tsxAmount < 0.0025) return rej(new TypeError('Insufficient funds'));
          }
       }
-
-      const result = await dtrContractInstance.registerPoint(
+      console.log(teller);
+      const result = await contract.registerPoint(
         teller.lat.toFixed(6) * (10 ** 5),
         teller.lng.toFixed(6) * (10 ** 5),
         teller.zone,
@@ -102,7 +104,7 @@ const dtrRegisterPoint = async (teller) =>
         teller.telegram,
         teller.username,
         {
-          from: ethToolbox.utils.add0x(key.address),
+          from: ethToolbox.utils.add0x(decrypted.address),
           value: parseInt(tsxAmount, 10),
           gas: 450000,
           gasPrice: GAS_PRICE,
@@ -110,8 +112,8 @@ const dtrRegisterPoint = async (teller) =>
       );
       console.log('result', result);
       return res({
-          from: ethToolbox.utils.add0x(key.address),
-          to: dtrContractInstance.address,
+          from: decrypted.address,
+          to: coontract.address,
           value: teller.amount,
           date: new Date().toLocaleString('en-US', { hour12: false }),
           dether: {
