@@ -1,6 +1,10 @@
 # detherGateway [![Build Status](https://travis-ci.com/dethertech/detherGateway.svg?token=kdsX9Y3G2xZ5ptCyzuYL&branch=master)](https://travis-ci.com/dethertech/detherGateway) ![npm](https://img.shields.io/npm/v/detherGateway.svg)
 Dether Gateway
 
+
+V0.1.2
+[V1.x](https://github.com/dethertech/dether.js/tree/v1.x)
+
 ## Table of Contents
 
 * [Get Started](#get-started)
