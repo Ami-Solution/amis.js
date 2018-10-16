@@ -1,4 +1,4 @@
-# DetherJS
+# AmisJS
 [![Build Status](https://travis-ci.com/dethertech/detherGateway.svg?token=kdsX9Y3G2xZ5ptCyzuYL&branch=master)](https://travis-ci.com/dethertech/detherGateway) ![npm](https://img.shields.io/npm/v/detherGateway.svg)
 
 AmisJS is Javascript SDK to easily interact with [AmiShop Contracts](https://github.com/amisolution/amishop-contracts)
