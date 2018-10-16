@@ -5,8 +5,8 @@ AmisJS is Javascript SDK to easily interact with [AmiShop Contracts](https://git
 
 It provides wrappers for all the public methods of the contract and formats values in and out.
 
-V1.0.0
-[V0.x](https://github.com/ami-solution/amis.js/tree/v0.x)
+v1.0.0
+[v0.x](https://github.com/ami-solution/amis.js/tree/v0.x)
 ## Table of Contents
 
 * [Install](#install)
@@ -67,8 +67,8 @@ npm run esdoc
 
 ## Dependencies
 
-* [dethercontract](https://github.com/ami-solution/amishop-contracts.git)
-* [eth-toolbox](https://github.com/ami-solution/eth-toolbox)
+* [amishop-contracts](https://github.com/ami-solution/amishop-contracts.git)
+* [eth-toolbox](https://www.npmjs.com/package/eth-toolbox)
 * [web3](https://github.com/ethereum/web3.js/)
 * [ethers.js](https://github.com/ethers-io/ethers.js)
 
