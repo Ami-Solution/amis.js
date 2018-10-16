@@ -25,7 +25,7 @@ V1.0.0
 Use NPM to get the package
 
 ```
-npm install --save dether.js
+npm install --save amis.js
 ```
 
 ## Docs
