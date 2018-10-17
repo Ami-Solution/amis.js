@@ -1,10 +1,10 @@
-// import DetherJS from 'detherjs';
-const DetherJS = require('../src/index');
+// import AmisJS from 'amisjs';
+const AmisJS = require('../src/index');
 
 (async () => {
-  console.log('DetherJS example');
+  console.log('AmisJS example');
 
-  const dether = new DetherJS({
+  const amis = new AmisJS({
     network: 'kovan',
   });
 
