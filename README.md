@@ -1,12 +1,12 @@
 # AmisJS
-[![Build Status](https://travis-ci.com/dethertech/detherGateway.svg?token=kdsX9Y3G2xZ5ptCyzuYL&branch=master)](https://travis-ci.com/ami-solution/AmisJS) ![npm](https://img.shields.io/npm/v/AmisJS.svg)
+[![Build Status](https://travis-ci.com/ami-solution/amisjs.svg?token=xxxx&branch=master)](https://travis-ci.com/ami-solution/amis.js) ![npm](https://img.shields.io/npm/v/amishop-contracts.svg)
 
-AmisJS is Javascript SDK to easily interact with [AmiShop Contracts](https://github.com/amisolution/amishop-contracts)
+AmisJS is Javascript SDK to easily interact with [amishop-contracts](https://github.com/ami-solution/amishop-contracts)
 
 It provides wrappers for all the public methods of the contract and formats values in and out.
 
-v1.0.0
-[v0.x](https://github.com/ami-solution/amis.js/tree/v0.x)
+v0.1.1
+[v0.1.0](https://github.com/ami-solution/amis.js/)
 ## Table of Contents
 
 * [Install](#install)
@@ -38,14 +38,14 @@ You can find more examples of method usage in [examples/usage.js](https://github
 ```
 import AmisJS from 'amis.js';
 
-const dether = new AmisJS({ network: 'kovan' });
+const amis = new AmisJS({ network: 'kovan' });
 const allTellers = await dether.getAllTellers();
 
-const wallet = DetherJS.Wallet.createRandom();
+const wallet = AmisJS.Wallet.createRandom();
 const encryptedWallet = await wallet.encrypt('password');
 
-const user = dether.getUser(encryptedWallet);
-const info = await dether.getInfo();
+const user = amis.getUser(encryptedWallet);
+const info = await amis.getInfo();
 ```
 
 ## Dev
@@ -68,7 +68,7 @@ npm run esdoc
 ## Dependencies
 
 * [amishop-contracts](https://github.com/ami-solution/amishop-contracts.git)
-* [eth-toolbox](https://www.npmjs.com/package/eth-toolbox)
+* [eth-toolbox](https://github.com/dethertech/eth-toolbox)
 * [web3](https://github.com/ethereum/web3.js/)
 * [ethers.js](https://github.com/ethers-io/ethers.js)
 
