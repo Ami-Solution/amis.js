@@ -5,22 +5,22 @@ import { validateSellPoint, validateSendCoin, validatePassword } from './utils/v
 import Contracts from './utils/contracts';
 import Formatters from './utils/formatters';
 
-class DetherUser {
+class AmisUser {
   /**
-   * Creates an instance of DetherUser.
+   * Creates an instance of AmisUser.
    *
-   * You may not instanciate from here, prefer from DetherJS.getUser method
+   * You may not instanciate from here, prefer from AmisJS.getUser method
    *
    * @param {object} opts
-   * @param {DetherJS} opts.dether dether instance
+   * @param {AmisJS} opts.amis amis instance
    * @param {string} opts.encryptedWallet user wallet
    */
   constructor(opts) {
-    if (!opts.dether || !opts.encryptedWallet) {
-      throw new Error('Need dether instance and wallet');
+    if (!opts.amis || !opts.encryptedWallet) {
+      throw new Error('Need amis instance and wallet');
     }
     /** @ignore */
-    this.dether = opts.dether;
+    this.amis = opts.amis;
     /** @ignore */
     this.encryptedWallet = opts.encryptedWallet;
     const parsedWallet = JSON.parse(opts.encryptedWallet);
@@ -40,7 +40,7 @@ class DetherUser {
       throw new TypeError('Need password to decrypt wallet');
     }
     const wallet = await Ethers.Wallet.fromEncryptedWallet(this.encryptedWallet, password);
-    wallet.provider = this.dether.provider;
+    wallet.provider = this.amis.provider;
     return wallet;
   }
 
@@ -57,7 +57,7 @@ class DetherUser {
    * @return {Promise<object>}
    */
   async getInfo() {
-    return this.dether.getTeller(this.address);
+    return this.amis.getTeller(this.address);
   }
 
   /**
@@ -65,7 +65,7 @@ class DetherUser {
    * @return {Promise<string>}
    */
   async getBalance() {
-    return this.dether.getTellerBalance(this.address);
+    return this.amis.getTellerBalance(this.address);
   }
 
   // gas used = 223319
@@ -113,7 +113,7 @@ class DetherUser {
         formattedSellPoint.telegram,
         formattedSellPoint.username,
       );
-      const minedTsx = await this.dether.provider.waitForTransaction(transaction.hash);
+      const minedTsx = await this.amis.provider.waitForTransaction(transaction.hash);
       return minedTsx;
     } catch (e) {
       throw new TypeError(e);
@@ -152,7 +152,7 @@ class DetherUser {
         add0x(receiver),
         Ethers.utils.parseEther(amount.toString()),
       );
-    const minedTsx = await this.dether.provider.waitForTransaction(transaction.hash);
+    const minedTsx = await this.amis.provider.waitForTransaction(transaction.hash);
     return minedTsx;
   }
 
@@ -177,9 +177,9 @@ class DetherUser {
     });
 
     const transaction = await customContract.withdrawAll();
-    const minedTsx = await this.dether.provider.waitForTransaction(transaction.hash);
+    const minedTsx = await this.amis.provider.waitForTransaction(transaction.hash);
     return minedTsx;
   }
 }
 
-export default DetherUser;
+export default AmisUser;

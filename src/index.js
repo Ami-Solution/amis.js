@@ -4,6 +4,6 @@
  */
 
 import 'babel-polyfill';
-import DetherJS from './detherJs';
+import AmisJS from './amisJs';
 
-module.exports = DetherJS;
+module.exports = AmisJS;

@@ -1,30 +1,30 @@
 /* global describe it beforeEach afterEach */
 import { expect } from 'chai';
 import sinon from 'sinon';
-import DetherJS from '../../src/detherJs';
-import DetherUser from '../../src/detherUser';
+import AmisJS from '../../src/amisJs';
+import AmisUser from '../../src/amisUser';
 import Contracts from '../../src/utils/contracts';
 
 import contractMock from '../mock/contract';
 
-describe('dether user', () => {
+describe('amis user', () => {
   let sandbox = null;
-  let dether = null;
+  let amis = null;
   let wallet = null;
   let user = null;
 
   beforeEach(async () => {
     sandbox = sinon.sandbox.create();
 
-    dether = new DetherJS({
+    amis = new AmisJS({
       network: 'kovan',
     });
 
-    wallet = DetherJS.Ethers.Wallet.createRandom();
+    wallet = AmisJS.Ethers.Wallet.createRandom();
     const encryptedWallet = await wallet.encrypt('password');
-    user = new DetherUser({ dether, encryptedWallet });
+    user = new AmisUser({ amis, encryptedWallet });
 
-    user.signedDetherContract = contractMock;
+    user.signedAmisContract = contractMock;
   });
 
   afterEach(() => {
@@ -35,38 +35,38 @@ describe('dether user', () => {
 
   it('should instanciate', async () => {
     const password = 'password';
-    const localWallet = DetherJS.Ethers.Wallet.createRandom();
+    const localWallet = AmisJS.Ethers.Wallet.createRandom();
     const encryptedWallet = await localWallet.encrypt(password);
 
-    const localDether = { provider: { chainId: 42 } };
+    const localAmis = { provider: { chainId: 42 } };
 
-    const detheruser = new DetherUser({
-      dether: localDether,
+    const amisuser = new AmisUser({
+      amis: localAmis,
       encryptedWallet,
     });
-    expect(detheruser.dether).to.eq(localDether);
-    expect(detheruser.encryptedWallet).to.eq(encryptedWallet);
+    expect(amisuser.amis).to.eq(localAmis);
+    expect(amisuser.encryptedWallet).to.eq(encryptedWallet);
 
     const decryptedWallet =
-      await DetherJS.Ethers.Wallet.fromEncryptedWallet(detheruser.encryptedWallet, password);
+      await AmisJS.Ethers.Wallet.fromEncryptedWallet(amisuser.encryptedWallet, password);
     expect(decryptedWallet.privateKey).to.eq(localWallet.privateKey);
   });
 
   it('should get wallet', async () => {
     const customWallet = {};
-    dether.provider = 'provider';
+    amis.provider = 'provider';
 
-    const restore = DetherJS.Ethers.Wallet;
-    DetherJS.Ethers.Wallet = {
+    const restore = AmisJS.Ethers.Wallet;
+    AmisJS.Ethers.Wallet = {
       fromEncryptedWallet: sinon.stub().returns(customWallet),
     };
 
     const wallet = await user._getWallet('password');
 
-    expect(DetherJS.Ethers.Wallet.fromEncryptedWallet.calledWith(user.encryptedWallet, 'password')).to.be.true;
+    expect(AmisJS.Ethers.Wallet.fromEncryptedWallet.calledWith(user.encryptedWallet, 'password')).to.be.true;
     expect(wallet.provider).to.eq('provider');
 
-    DetherJS.Ethers.Wallet = restore;
+    AmisJS.Ethers.Wallet = restore;
   });
 
   it('should get user address', async () => {
@@ -75,7 +75,7 @@ describe('dether user', () => {
   });
 
   it('should get user info', async () => {
-    const stub = sandbox.stub(dether, 'getTeller');
+    const stub = sandbox.stub(amis, 'getTeller');
     stub.returns('info');
 
     const info = await user.getInfo();
@@ -85,7 +85,7 @@ describe('dether user', () => {
   });
 
   it('should get user escrow balance', async () => {
-    const stub = sandbox.stub(dether, 'getTellerBalance');
+    const stub = sandbox.stub(amis, 'getTellerBalance');
     stub.returns('balance');
     const balance = await user.getBalance();
 
@@ -118,7 +118,7 @@ describe('dether user', () => {
 
     const waitForTransaction = sinon.stub();
     waitForTransaction.resolves(transaction);
-    user.dether.provider = {
+    user.amis.provider = {
       waitForTransaction,
     };
 
@@ -138,7 +138,7 @@ describe('dether user', () => {
     expect(registerPoint.args[0][7][1]).to.eq(98);
     expect(registerPoint.args[0][7][2]).to.eq(97);
 
-    const transactionValue = DetherJS.Ethers.utils.parseEther('0.01');
+    const transactionValue = AmisJS.Ethers.utils.parseEther('0.01');
     expect(_getCustomContract.args[0][0].value.eq(transactionValue)).to.be.true;
     expect(_getCustomContract.args[0][0].password).to.eq('password');
     expect(waitForTransaction.calledWith(transaction.hash));
@@ -151,7 +151,7 @@ describe('dether user', () => {
 
     const opts = {
       amount: 1,
-      receiver: '0x085b30734fD4f48369D53225b410d7D04b2d9011',
+      receiver: '0x57b00c981363c67b11e07eaa71364bf20e8025fe',
     };
 
     const sendCoin = sinon.stub();
@@ -164,7 +164,7 @@ describe('dether user', () => {
 
     const waitForTransaction = sinon.stub();
     waitForTransaction.resolves(transaction);
-    user.dether.provider = {
+    user.amis.provider = {
       waitForTransaction,
     };
 
@@ -172,8 +172,8 @@ describe('dether user', () => {
     expect(result).to.deep.eq(transaction);
 
     expect(sendCoin.calledWith(
-      '0x085b30734fD4f48369D53225b410d7D04b2d9011',
-      DetherJS.Ethers.utils.parseEther('1'),
+      '0x57b00c981363c67b11e07eaa71364bf20e8025fe',
+      AmisJS.Ethers.utils.parseEther('1'),
     )).to.be.true;
     expect(_getCustomContract.args[0][0].password).to.eq('password');
     expect(waitForTransaction.calledWith(transaction.hash));
@@ -192,7 +192,7 @@ describe('dether user', () => {
 
     const waitForTransaction = sinon.stub();
     waitForTransaction.resolves(transaction);
-    user.dether.provider = {
+    user.amis.provider = {
       waitForTransaction,
     };
 

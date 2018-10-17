@@ -1,15 +1,15 @@
-// import DetherJS from 'detherjs';
-const DetherJS = require('../src/index');
+// import AmisJS from 'amisjs';
+const AmisJS = require('../src/index');
 
 (async () => {
-  console.log('DetherJS example');
-  let dether;
+  console.log('AmisJS example');
+  let amis;
 
   try {
-    dether = new DetherJS({
+    amis = new AmisJS({
       network: 'kovan',
     });
-    console.log('- Detherjs has been instantiated');
+    console.log('- Amisjs has been instantiated');
   } catch (e) {
     throw new Error(e);
   }
@@ -19,7 +19,7 @@ const DetherJS = require('../src/index');
   // Public data
 
   // Get list of all tellers
-  const allTellers = await dether.getAllTellers();
+  const allTellers = await amis.getAllTellers();
   console.log(` ${allTellers.length} tellers found`);
   // console.log('All tellers: ', allTellers);
 
@@ -32,30 +32,30 @@ const DetherJS = require('../src/index');
     '0x788f7291E1BA5b299CabBe5b70F8b4869f4222A2',
   ];
 
-  const tellers = await dether.getAllTellers(addr);
+  const tellers = await amis.getAllTellers(addr);
   console.log(` ${tellers.length} tellers found`);
 
   // Get list of teller in a zone
   const zone = 42;
-  const tellersInZone = await dether.getTellersInZone(zone);
+  const tellersInZone = await amis.getTellersInZone(zone);
   console.log(` ${tellersInZone.length} tellers found`);
 
 
   // Get list of teller from multiple zone
 
   const zones = [42, 101, 3104];
-  const tellersInZones = await dether.getTellersInZone(zones);
+  const tellersInZones = await amis.getTellersInZone(zones);
   console.log(` ${tellersInZones.length} tellers found`);
 
 
   // Get details of a teller
   const tellerAddress = '0x085b30734fD4f48369D53225b410d7D04b2d9011';
 
-  const publicTellerInfo = await dether.getTeller(tellerAddress);
+  const publicTellerInfo = await amis.getTeller(tellerAddress);
   console.log(' Public teller: ', publicTellerInfo);
 
   // Get escrow balance of teller
-  const tellerBalance = await dether.getTellerBalance(tellerAddress);
+  const tellerBalance = await amis.getTellerBalance(tellerAddress);
   console.log(' Teller escrow balance: ', tellerBalance);
 
   // User data
@@ -63,9 +63,9 @@ const DetherJS = require('../src/index');
   const privateKey = '0x0123456789012345678901234567890123456789012345678901234567890123';
   const userPassword = '1234';
 
-  const wallet = new DetherJS.Ethers.Wallet(privateKey);
+  const wallet = new AmisJS.Ethers.Wallet(privateKey);
   const encryptedWallet = await wallet.encrypt(userPassword);
-  const user = await dether.getUser(encryptedWallet);
+  const user = await amis.getUser(encryptedWallet);
   // User registers as a teller
 
   const sellPoint = {

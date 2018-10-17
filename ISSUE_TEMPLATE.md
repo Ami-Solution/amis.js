@@ -1,8 +1,8 @@
 <!--
 
-Have you read Dether's Code of Conduct? By filing an Issue, you are expected to comply with it, including treating everyone with respect: https://github.com/dethertech/detherGateway/blob/master/CONTRIBUTING.md
+Have you read AmiShop's Code of Conduct? By filing an Issue, you are expected to comply with it, including treating everyone with respect: https://github.com/ami-solution/amis.js/blob/master/CONTRIBUTING.md
 
-Do you want to ask a question? Are you looking for support? The Dether slack is the best place for getting support: https://dether.slack.com
+Do you want to ask a question? Are you looking for support? The amisolution slack is the best place for getting support: https://amisolution.slack.com
 
 -->
 
