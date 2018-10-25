@@ -7,9 +7,9 @@
 /coverage
 
 # production
-/build
+#/build
 analysis.html
-/config
+#/config
 src/**/*.css
 src/**/_snapshots_
 

@@ -1,9 +1,9 @@
 /**
- * detherGateway
- * @author Dether TEAM
+ * amisGateway
+ * @author Amis TEAM
  */
 
 import 'babel-polyfill';
-import DetherJS from './detherJs';
+import AmisJS from './amisJs';
 
-module.exports = DetherJS;
+module.exports = AmisJS;

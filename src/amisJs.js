@@ -6,10 +6,10 @@ import Contracts from './utils/contracts';
 import Providers from './utils/providers';
 import Formatters from './utils/formatters';
 
-class DetherJS {
+class AmisJS {
   /**
    * Creates an instance of DetherUser
-   * You may not instanciate from here, prefer from DetherJS.getUser method
+   * You may not instanciate from here, prefer from AmisJS.getUser method
    *
    * @param {object}    providerData
    * @param {String}    providerData.network      Name of network ('homestead',
@@ -96,7 +96,7 @@ class DetherJS {
 
     const tellers = await Promise.all(tellerAddrList.map(this.getTeller.bind(this)));
 
-    return DetherJS._filterTellerList(tellers);
+    return AmisJS._filterTellerList(tellers);
   }
 
   /**
@@ -118,7 +118,7 @@ class DetherJS {
 
     if (!result || !result.length) return [];
     const tellers = await Promise.all(result.map(this.getTeller.bind(this)));
-    return DetherJS._filterTellerList(tellers).filter(t => zones.indexOf(t.zoneId) >= 0);
+    return AmisJS._filterTellerList(tellers).filter(t => zones.indexOf(t.zoneId) >= 0);
   }
 
   /**
@@ -136,6 +136,6 @@ class DetherJS {
   }
 }
 
-DetherJS.Ethers = Ethers;
+AmisJS.Ethers = Ethers;
 
-export default DetherJS;
+export default AmisJS;
