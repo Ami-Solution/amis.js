@@ -1,0 +1,21 @@
+{
+  "module": "/rbd/pnpm-volume/1a279bc6-c195-4d81-ab3b-05499e43f046/node_modules/.registry.npmjs.org/nyc/11.9.0/node_modules/nyc/node_modules/spawn-wrap/index.js",
+  "deps": {
+    "foregroundChild": "/rbd/pnpm-volume/1a279bc6-c195-4d81-ab3b-05499e43f046/node_modules/.registry.npmjs.org/nyc/11.9.0/node_modules/nyc/node_modules/foreground-child/index.js",
+    "signalExit": "/rbd/pnpm-volume/1a279bc6-c195-4d81-ab3b-05499e43f046/node_modules/.registry.npmjs.org/nyc/11.9.0/node_modules/nyc/node_modules/signal-exit/index.js"
+  },
+  "key": "23359-d6bba7ca43f3",
+  "workingDir": "/app/.node-spawn-wrap-23359-d6bba7ca43f3",
+  "argv": [
+    "/rbd/pnpm-volume/1a279bc6-c195-4d81-ab3b-05499e43f046/node_modules/.registry.npmjs.org/nyc/11.9.0/node_modules/nyc/bin/wrap.js"
+  ],
+  "execArgv": [],
+  "env": {
+    "NYC_CONFIG": "{\"_\":[\"mocha\"],\"silent\":false,\"s\":false,\"all\":false,\"a\":false,\"exclude-after-remap\":true,\"excludeAfterRemap\":true,\"eager\":false,\"cache\":true,\"c\":true,\"babel-cache\":false,\"babelCache\":false,\"check-coverage\":false,\"checkCoverage\":false,\"source-map\":true,\"sourceMap\":true,\"per-file\":false,\"perFile\":false,\"produce-source-map\":false,\"produceSourceMap\":false,\"compact\":true,\"preserve-comments\":true,\"preserveComments\":true,\"instrument\":true,\"hook-run-in-context\":true,\"hookRunInContext\":true,\"hook-run-in-this-context\":true,\"hookRunInThisContext\":true,\"show-process-tree\":false,\"showProcessTree\":false,\"clean\":true,\"skip-empty\":false,\"skipEmpty\":false,\"h\":false,\"help\":false,\"version\":false,\"reporter\":\"html\",\"r\":\"html\",\"report-dir\":\"coverage\",\"reportDir\":\"coverage\",\"exclude\":[\"coverage/**\",\"packages/*/test/**\",\"test/**\",\"test{,-*}.js\",\"**/*{.,-}test.js\",\"**/__tests__/**\",\"**/node_modules/**\"],\"x\":[\"coverage/**\",\"packages/*/test/**\",\"test/**\",\"test{,-*}.js\",\"**/*{.,-}test.js\",\"**/__tests__/**\",\"**/node_modules/**\"],\"include\":[],\"n\":[],\"cwd\":\"/app\",\"require\":[],\"i\":[],\"extension\":[],\"e\":[],\"branches\":0,\"functions\":0,\"lines\":90,\"statements\":0,\"nycrc-path\":\".nycrc\",\"nycrcPath\":\".nycrc\",\"temp-directory\":\"./.nyc_output\",\"tempDirectory\":\"./.nyc_output\",\"$0\":\"/rbd/pnpm-volume/1a279bc6-c195-4d81-ab3b-05499e43f046/node_modules/nyc/bin/nyc.js\",\"instrumenter\":\"./lib/instrumenters/istanbul\"}",
+    "NYC_CWD": "/app",
+    "NYC_ROOT_ID": "d94dd6144856815327c475bb32772d4c",
+    "NYC_INSTRUMENTER": "./lib/instrumenters/istanbul",
+    "BABEL_DISABLE_CACHE": "1"
+  },
+  "root": 23359
+}

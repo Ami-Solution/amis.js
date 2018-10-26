@@ -1,7 +1,7 @@
 import Ethers from 'ethers';
 
-import DetherJson from 'dethercontract/contracts/DetherInterface.json';
-import DetherStorageJson from 'dethercontract/contracts/DetherStorage.json';
+import DetherJson from 'amishop-contracts';
+import DetherStorageJson from 'contracts/AmisStorage.json';
 
 const Contracts = {
   /**

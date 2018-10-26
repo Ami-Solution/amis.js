@@ -4627,7 +4627,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
-  amishop-contracts: ^0.1.0
+  amishop-contracts: '*'
   babel-cli: ^6.26.0
   babel-core: ^6.26.0
   babel-eslint: ^8.0.1

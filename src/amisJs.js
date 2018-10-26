@@ -1,14 +1,14 @@
 import Ethers from 'ethers';
 
 import { add0x, isAddr } from './utils/eth';
-import DetherUser from './detherUser';
+import DetherUser from './amisUser';
 import Contracts from './utils/contracts';
 import Providers from './utils/providers';
 import Formatters from './utils/formatters';
 
 class AmisJS {
   /**
-   * Creates an instance of DetherUser
+   * Creates an instance of AmisUser
    * You may not instanciate from here, prefer from AmisJS.getUser method
    *
    * @param {object}    providerData
@@ -30,9 +30,9 @@ class AmisJS {
   }
 
   /**
-   * Get instance of DetherUser linked to this Dether instance
+   * Get instance of AmisUser linked to this Dether instance
    * @param  {object}  encryptedWallet Encrypted user wallet
-   * @return {Object} DetherUser
+   * @return {Object} AmisUser
    */
   getUser(encryptedWallet) {
     return new DetherUser({
