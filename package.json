@@ -17,11 +17,7 @@
     "url": "git+https://github.com/ami-solution/amis.js.git"
   },
   "keywords": [
-    "AmiS",
-    "AmisJS",
-    "AmiShop",
-    "ERC20",
-    "Exchange",
+
     "ethereum",
     "sdk"
   ],
