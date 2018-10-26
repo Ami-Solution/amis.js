@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      - image: circleci/node:8.12
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -33,5 +33,32 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
-      # run tests!
-      - run: yarn test
+      - run:
+          name: Update NPM
+          command: |
+            npm install npm@latest
+            sudo rm -rf /usr/local/lib/node_modules/npm
+            sudo mv node_modules/npm /usr/local/lib/node_modules/npm
+            sudo chown -R 500:500 /usr/local/lib/node_modules/npm
+       
+      - run:
+          name: "Checking Versions"
+          command: |
+            node --version
+            npm --version
+      - run:
+          name: Change permissions from root to user
+          command: sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
+          
+          
+      - run:
+          name: npm run esdoc
+          command: npm run esdoc  
+          
+      - run:
+          name: npm install -g babel-core && npm install -g babel-polyfill
+          command: npm install -g babel-core && npm install -g babel-polyfill
+          
+      - run:
+          name: npm test
+          command: npm test

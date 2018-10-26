@@ -9,7 +9,7 @@ Do you want to ask a question? Are you looking for support? The amisolution slac
 ### Prerequisites
 
 * [ ] Put an X between the brackets on this line if you have done all of the following:
-    * Checked with the Dether team on Slack
+    * Checked with the Amis team on Gitter or slack
     * Checked that your issue isn't already filed
 
 ### Description

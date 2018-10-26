@@ -1,6 +1,6 @@
 /**
- * detherGateway
- * @author Dether TEAM
+ * amisGateway
+ * @author Amis TEAM
  */
 
 import 'babel-polyfill';

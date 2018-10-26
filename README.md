@@ -52,7 +52,7 @@ npm install --save amis.js
 
 ## Docs
 
-Extensive documentation of all the methods can be found on the [API documentation](https://ami-solution.github.io/amis.js)
+Extensive documentation of all the methods can be found in the [API documentation](https://ami-solution.github.io/amis.js)
 
 ## Usage
 
@@ -93,6 +93,7 @@ npm run esdoc
 * [eth-toolbox](https://github.com/dethertech/eth-toolbox)
 * [web3](https://github.com/ethereum/web3.js/)
 * [ethers.js](https://github.com/ethers-io/ethers.js)
+* [clevis](https://github.com/austintgriffith/clevis)
 
 ## Bugs
 
