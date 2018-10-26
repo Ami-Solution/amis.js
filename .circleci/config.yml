@@ -56,5 +56,9 @@ jobs:
           command: npm run esdoc  
           
       - run:
+          name: npm install -g babel-polyfill
+          command: npm install -g babel-polyfill
+          
+      - run:
           name: npm test
           command: npm test
